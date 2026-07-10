@@ -24,6 +24,12 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # git config user.name is required by the builder() function in
+      # build.gradle.kts (line 40).  CI runners don't have a global
+      # git username set, so we provide one before the build.
+      - name: Configure git user
+        run: git config --global user.name "GitHub Actions"
+
       - name: Build with Gradle
         run: |
           chmod +x gradlew
